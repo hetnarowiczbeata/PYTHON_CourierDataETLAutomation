@@ -12,12 +12,16 @@ services/
 Contains modules responsible for the application's business logic.
         loading.py/ Handles loading and reading source CSV files into Pandas DataFrames
         cleaning.py/ Contains data cleaning and transformation logic, such as removing unnecessary columns, standardizing data, and preparing datasets for further analysis
-        
-**During the data cleaning process, I noticed missing values in the VAS Charges column. Since Total Amount appears to be the sum of Tariff and VAS Charges, I calculated the missing VAS Charges values by subtracting Tariff from Total Amount**
+
+**During the data cleaning process, I noticed missing values in the VAS Charges column. Since Total Amount appears to be the sum of Tariff and VAS Charges, I calculated the missing VAS Charges values by subtracting Tariff from Total Amount. This calculation was applied only to records where VAS Charges was null, in order to avoid affecting valid data and to prevent issues in the future if missing values appear in either the Tariff or Total Amount columns.**
 
 config.py/ Configuration file that stores paths to project directories: raw_data, clean_data,processed_data
 
 main.py/ The main entry point of the application. Responsible for reading CSV files from the raw_data directory, executing the data cleaning and transformation process, saving processed files to the clean_data directory, archiving processed source files in the processed_data directory 
+
+**To prevent duplicate processing, the pipeline checks whether a file with the same name already exists in the processed_data directory. If a matching file is found, the newly uploaded file is treated as a duplicate and removed from raw_data without being processed again**
+
+
 
 
 **Workflow**
