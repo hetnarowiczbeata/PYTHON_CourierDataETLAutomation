@@ -4,11 +4,16 @@ from services.cleaning import clean_data
 from config import Config
 
 for file in Config.RAW_DATA_DIR.glob("*.csv"):
+    output_file= Config.CLEANED_DATA_DIR / file.name
+    processed_files= Config.PROCESSED_DATA_DIR / file.name
+    if  processed_files.exists():
+        print(f"File {file.name} already processed. Skipping.")
+        continue
     df= read_csv(file)
     cleaned_df= clean_data(df)
-    output_file= Config.CLEANED_DATA_DIR / file.name
-    cleaned_df.to_csv(output_file, index=False)
-    processed_files= Config.PROCESSED_DATA_DIR / file.name
-    df.to_csv(processed_files, index=False)
-
+    cleaned_df.to_csv(output_file, index=False,decimal=',')
+    df.to_csv(processed_files, index=False,decimal=',')
+    file.unlink()
+    print(f"Processed {file.name} and saved cleaned data to {output_file}.")
+   
 

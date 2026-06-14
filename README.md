@@ -12,6 +12,8 @@ services/
 Contains modules responsible for the application's business logic.
         loading.py/ Handles loading and reading source CSV files into Pandas DataFrames
         cleaning.py/ Contains data cleaning and transformation logic, such as removing unnecessary columns, standardizing data, and preparing datasets for further analysis
+        
+**During the data cleaning process, I noticed missing values in the VAS Charges column. Since Total Amount appears to be the sum of Tariff and VAS Charges, I calculated the missing VAS Charges values by subtracting Tariff from Total Amount**
 
 config.py/ Configuration file that stores paths to project directories: raw_data, clean_data,processed_data
 
