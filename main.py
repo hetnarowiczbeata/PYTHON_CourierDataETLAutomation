@@ -8,6 +8,7 @@ for file in Config.RAW_DATA_DIR.glob("*.csv"):
     processed_files= Config.PROCESSED_DATA_DIR / file.name
     if  processed_files.exists():
         print(f"File {file.name} already processed. Skipping.")
+        file.unlink()
         continue
     df= read_csv(file)
     cleaned_df= clean_data(df)
